@@ -1,10 +1,12 @@
-//JS file that sets up the map
+/**
+ * Created by Evan on 2/27/2016.
+ */
 (function() {
     "use strict";
 
     var map = L.map('map');
 
-    window.onload = function(){
+    window.onload = function () {
         loadMap();
     };
 
@@ -28,7 +30,6 @@
     }
 
 
-
     function getData() {
         var ajax = new XMLHttpRequest();
         ajax.onload = addMap;
@@ -41,11 +42,20 @@
         //console.log(this.responseText);
         for (var i = 0; i < data.length; i++) {
             var popup = "<h3>" + data[i].address + "</h3>";
-            if(data[i].website !== undefined) {
+            if (data[i].website !== undefined) {
                 popup += "<br /><a href=\"" + data[i].website.url + "\">Website</a>";
             }
             L.marker([data[i].latitude, data[i].longitude]).addTo(map).bindPopup(popup);
 
         }
     }
+
+    var myFirebaseRef = new Firebase("https://luminous-fire-9933.firebaseio.com");
+
+    myFirebaseRef.child("locations/latitude").set("chinchin");
+
+    myFirebaseRef.on("value", function (snapshot) {
+        var chin = snapshot.child("locations/latitude");
+        console.log(chin.val());
+    });
 })();
