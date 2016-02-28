@@ -8,9 +8,23 @@
 
     window.onload = function () {
         loadMap();
+        initCoursera();
     };
 
+    /*
+     *   generic ajax caller method
+     */
 
+    function ajax(url, func) {
+        var req = new XMLHttpRequest();
+        req.onload = func;
+        req.open("GET", url, true);
+        req.send();
+    }
+
+    /*
+     *    LEAFTLET JS
+     */
     function loadMap() {
 
         var key = "pk.eyJ1IjoiZXZhbmZyYXdsZXkiLCJhIjoiY2lqemV0cDJpMmx2a3Z3bTV2dGh1bmt0MSJ9.gJsWsiu3AareD8XkI1-0Aw";
@@ -29,12 +43,9 @@
         getData();
     }
 
-
     function getData() {
-        var ajax = new XMLHttpRequest();
-        ajax.onload = addMap;
-        ajax.open("GET", "https://data.seattle.gov/resource/awnr-r8xe.json", true);
-        ajax.send();
+        var url = "https://data.seattle.gov/resource/awnr-r8xe.json";
+        ajax(url, addMap);
     }
 
     function addMap() {
@@ -50,6 +61,11 @@
         }
     }
 
+
+    /*
+     *      FIREBASE JS
+     */
+
     var myFirebaseRef = new Firebase("https://luminous-fire-9933.firebaseio.com");
 
     myFirebaseRef.child("locations/latitude").set("chinchin");
@@ -58,4 +74,27 @@
         var chin = snapshot.child("locations/latitude");
         console.log(chin.val());
     });
+
+    /*
+     *      COURSERA JS
+     */
+
+    function initCoursera() {
+
+        var url = "https://api.coursera.org/api/courses.v1?fields=domainTypes,description,startDate";
+        //get the things to make this a specific url    
+
+        ajax(url, loadCourera);
+    }
+
+    function loadCourera() {
+        var data = JSON.parse(this.responseText);
+        // do shit to the data that is passed in
+        // look at the data of coursera
+        var test = data.elements[3].startDate.toDateString();
+        console.log(test);
+    }
+
+
+
 })();
