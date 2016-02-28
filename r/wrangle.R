@@ -15,3 +15,8 @@ m <- leaflet() %>%
   addMarkers(lng = data$Longitude, lat = data$Latitude, popup = data$Address)
 
 m
+
+
+fuck <- fromJSON("https://api.coursera.org/api/courses.v1")
+
+fuck

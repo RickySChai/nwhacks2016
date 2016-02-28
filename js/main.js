@@ -4,10 +4,11 @@
 (function() {
     "use strict";
 
-    var map = L.map('map');
+    //var map = L.map('map');
     window.onload = function () {
-        loadMap();
-        initCoursera();
+        //loadMap();
+        injectEmployers();
+        //initCoursera();
     };
 
     /*
@@ -70,10 +71,7 @@
 
     myFirebaseRef.child("locations/latitude").set("chinchin");
 
-    myFirebaseRef.on("value", function (snapshot) {
-        var chin = snapshot.child("locations/latitude");
-        console.log(chin.val());
-    });
+
 
     /*
      *      COURSERA JS
@@ -84,18 +82,32 @@
         var url = "https://api.coursera.org/api/courses.v1?fields=domainTypes,description,startDate";
         //get the things to make this a specific url    
 
-        ajax(url, loadCourera);
-    }
 
-    function loadCourera() {
-        var data = JSON.parse(this.responseText);
-        // do shit to the data that is passed in
-        // look at the data of coursera
-        var test = data.elements[3].startDate.toDateString();
-
-        console.log(test);
     }
 
 
+
+    /*
+     *     inject the employers
+     *
+     */
+
+    function injectEmployers() {
+        console.log("test");
+        myFirebaseRef.on("value", function (snapshot) {
+
+            var div = document.getElementById("employers");
+            snapshot = snapshot.child("Employer");
+            snapshot.forEach(function(childSnapshot){
+                var listing = document.createElement("div");
+                listing.classList.add("listing");
+                listing.innerHTML = childSnapshot.val();
+
+                div.appendChild(listing);
+            });
+
+
+        });
+    }
 
 })();
