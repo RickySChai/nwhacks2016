@@ -5,7 +5,6 @@
     "use strict";
 
     var map = L.map('map');
-
     window.onload = function () {
         loadMap();
         initCoursera();
@@ -19,6 +18,7 @@
         var req = new XMLHttpRequest();
         req.onload = func;
         req.open("GET", url, true);
+        
         req.send();
     }
 
@@ -92,6 +92,7 @@
         // do shit to the data that is passed in
         // look at the data of coursera
         var test = data.elements[3].startDate.toDateString();
+
         console.log(test);
     }
 
