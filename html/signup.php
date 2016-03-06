@@ -6,7 +6,7 @@
     <script src="https://cdn.firebase.com/js/client/2.4.1/firebase.js"></script>
 </head>
 <body>
-	<?php 
+	<?php
 		$success = true;
 		$errorMessage = " ";
 		$name = $_POST['name'];
@@ -19,7 +19,7 @@
 		 }
 		 else if ($success == true) {
 		   // do something with the data
-		} 
+		}
 	?>
 	<h1>Sign-Up!</h1>
 	<form method="post" action="../index.html">
